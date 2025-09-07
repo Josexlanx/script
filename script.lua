@@ -1,154 +1,115 @@
-local player = game.Players.LocalPlayer
-local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
-screenGui.Name = "ScanDeepUI"
-screenGui.ResetOnSpawn = false
+-- UI PRINCIPAL
+local ScreenGui = Instance.new("ScreenGui")
+local MainFrame = Instance.new("Frame")
+local ScanButton = Instance.new("TextButton")
+local CloseButton = Instance.new("TextButton")
+local OutputBox = Instance.new("TextBox")
+local Copy1 = Instance.new("TextButton")
+local Copy2 = Instance.new("TextButton")
 
-local frame = Instance.new("Frame", screenGui)
-frame.Size = UDim2.new(0, 600, 0, 350)
-frame.Position = UDim2.new(0.5, -300, 0.5, -175)
-frame.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
-frame.BorderSizePixel = 0
+ScreenGui.Parent = game.CoreGui
+ScreenGui.Name = "ScanMascotasUI"
 
-local title = Instance.new("TextLabel", frame)
-title.Size = UDim2.new(1, -90, 0, 30)
-title.Position = UDim2.new(0, 10, 0, 5)
-title.Text = "📦 Escaneo Profundo de Juego (mascotas ocultas)"
-title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.BackgroundTransparency = 1
-title.Font = Enum.Font.SourceSansBold
-title.TextSize = 18
-title.TextXAlignment = Enum.TextXAlignment.Left
+MainFrame.Size = UDim2.new(0, 500, 0, 400)
+MainFrame.Position = UDim2.new(0.5, -250, 0.5, -200)
+MainFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+MainFrame.BorderSizePixel = 0
+MainFrame.Parent = ScreenGui
+MainFrame.Active = true
+MainFrame.Draggable = true
 
--- Botón minimizar
-local minimize = Instance.new("TextButton", frame)
-minimize.Size = UDim2.new(0, 25, 0, 25)
-minimize.Position = UDim2.new(1, -55, 0, 5)
-minimize.Text = "_"
-minimize.TextColor3 = Color3.new(1, 1, 1)
-minimize.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ScanButton.Size = UDim2.new(0, 100, 0, 30)
+ScanButton.Position = UDim2.new(0, 10, 0, 10)
+ScanButton.Text = "Buscar Mascotas"
+ScanButton.BackgroundColor3 = Color3.fromRGB(60, 120, 60)
+ScanButton.TextColor3 = Color3.new(1, 1, 1)
+ScanButton.Parent = MainFrame
 
--- Botón cerrar
-local close = Instance.new("TextButton", frame)
-close.Size = UDim2.new(0, 25, 0, 25)
-close.Position = UDim2.new(1, -30, 0, 5)
-close.Text = "X"
-close.TextColor3 = Color3.new(1, 0.5, 0.5)
-close.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(1, -40, 0, 10)
+CloseButton.Text = "X"
+CloseButton.BackgroundColor3 = Color3.fromRGB(120, 60, 60)
+CloseButton.TextColor3 = Color3.new(1, 1, 1)
+CloseButton.Parent = MainFrame
 
--- Caja de resultados
-local box = Instance.new("TextBox", frame)
-box.Size = UDim2.new(1, -20, 1, -100)
-box.Position = UDim2.new(0, 10, 0, 40)
-box.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
-box.TextColor3 = Color3.fromRGB(0, 255, 0)
-box.TextXAlignment = Enum.TextXAlignment.Left
-box.TextYAlignment = Enum.TextYAlignment.Top
-box.TextSize = 14
-box.Font = Enum.Font.Code
-box.MultiLine = true
-box.ClearTextOnFocus = false
-box.TextWrapped = true
-box.Text = "[LOG] Cargado. Presiona 'Escanear'.\n"
+OutputBox.Size = UDim2.new(1, -20, 0, 250)
+OutputBox.Position = UDim2.new(0, 10, 0, 50)
+OutputBox.Text = ""
+OutputBox.TextWrapped = false
+OutputBox.TextXAlignment = Enum.TextXAlignment.Left
+OutputBox.TextYAlignment = Enum.TextYAlignment.Top
+OutputBox.ClearTextOnFocus = false
+OutputBox.MultiLine = true
+OutputBox.TextEditable = false
+OutputBox.TextSize = 14
+OutputBox.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+OutputBox.TextColor3 = Color3.new(1, 1, 1)
+OutputBox.Parent = MainFrame
 
--- Botón escanear
-local boton = Instance.new("TextButton", frame)
-boton.Size = UDim2.new(0.5, -15, 0, 40)
-boton.Position = UDim2.new(0, 10, 1, -50)
-boton.Text = "🔍 Escanear todo el juego"
-boton.BackgroundColor3 = Color3.fromRGB(45, 45, 90)
-boton.TextColor3 = Color3.new(1, 1, 1)
-boton.Font = Enum.Font.SourceSansBold
-boton.TextSize = 16
+Copy1.Size = UDim2.new(0, 100, 0, 30)
+Copy1.Position = UDim2.new(0, 10, 1, -40)
+Copy1.Text = "Copiar Parte 1"
+Copy1.BackgroundColor3 = Color3.fromRGB(60, 60, 120)
+Copy1.TextColor3 = Color3.new(1, 1, 1)
+Copy1.Parent = MainFrame
 
--- Botón copiar
-local copiar = Instance.new("TextButton", frame)
-copiar.Size = UDim2.new(0.5, -15, 0, 40)
-copiar.Position = UDim2.new(0.5, 5, 1, -50)
-copiar.Text = "📋 Copiar resultados"
-copiar.BackgroundColor3 = Color3.fromRGB(45, 90, 45)
-copiar.TextColor3 = Color3.new(1, 1, 1)
-copiar.Font = Enum.Font.SourceSansBold
-copiar.TextSize = 16
+Copy2.Size = UDim2.new(0, 100, 0, 30)
+Copy2.Position = UDim2.new(0, 120, 1, -40)
+Copy2.Text = "Copiar Parte 2"
+Copy2.BackgroundColor3 = Color3.fromRGB(60, 60, 120)
+Copy2.TextColor3 = Color3.new(1, 1, 1)
+Copy2.Parent = MainFrame
 
--- Función para agregar texto
-local function log(text)
-	box.Text = box.Text .. text .. "\n"
-end
+-- VARIABLES
+local resultados = {}
 
--- Palabras clave
-local palabrasClave = {"Glimmer", "Sprite", "Pet", "KG", "Age", "Shovel", "Destroy"}
+-- ESCANEAR MASCOTAS
+ScanButton.MouseButton1Click:Connect(function()
+    OutputBox.Text = "[ESCANEO] Buscando posibles mascotas visuales...\n"
+    resultados = {}
 
-local function contienePalabrasClave(text)
-	for _, palabra in pairs(palabrasClave) do
-		if string.lower(tostring(text)):find(string.lower(palabra)) then
-			return true
-		end
-	end
-	return false
-end
+    local function checkInstance(obj)
+        if obj:IsA("Model") or obj:IsA("Tool") then
+            if tostring(obj):lower():find("pet") or tostring(obj):lower():find("mascota") then
+                table.insert(resultados, obj:GetFullName())
+            end
+        end
+        for _, child in ipairs(obj:GetChildren()) do
+            checkInstance(child)
+        end
+    end
 
--- Escaneo en chunks (no congela)
-local function escanearProfundamente()
-	log("[ESCANEO] Buscando en todo el juego...")
-	local objetos = game:GetDescendants()
-	local total = #objetos
-	local encontrados = 0
+    checkInstance(game.Players.LocalPlayer)
+    checkInstance(game.Workspace)
+    checkInstance(game.ReplicatedStorage)
+    checkInstance(game:GetService("Lighting"))
 
-	local i = 0
-	while i < total do
-		for j = 1, 300 do -- procesa de 300 en 300
-			i = i + 1
-			local obj = objetos[i]
-			if not obj then break end
+    -- Mostrar resultados en la caja
+    OutputBox.Text = OutputBox.Text .. "[FIN] Escaneo completado.\n\n"
 
-			pcall(function()
-				if obj:IsA("TextLabel") or obj:IsA("StringValue") or obj:IsA("TextBox") then
-					local texto = obj.Text or obj.Value
-					if contienePalabrasClave(texto) then
-						encontrados += 1
-						log("✅ [" .. obj.ClassName .. "] " .. obj:GetFullName())
-					end
-				elseif obj:IsA("ModuleScript") or obj:IsA("LocalScript") then
-					if contienePalabrasClave(obj.Name) then
-						encontrados += 1
-						log("📘 Script con nombre clave: " .. obj:GetFullName())
-					end
-				elseif contienePalabrasClave(obj.Name) then
-					encontrados += 1
-					log("📦 Objeto con nombre clave: " .. obj:GetFullName())
-				end
-			end)
-		end
-		task.wait(0.05) -- respiro, evita freeze
-	end
-
-	log("[FIN] Escaneo terminado. Objetos encontrados: " .. encontrados)
-end
-
--- Eventos botones
-boton.MouseButton1Click:Connect(function()
-	escanearProfundamente()
+    for i, v in ipairs(resultados) do
+        OutputBox.Text = OutputBox.Text .. "[" .. i .. "] " .. v .. "\n"
+    end
 end)
 
-copiar.MouseButton1Click:Connect(function()
-	if setclipboard then
-		pcall(function()
-			setclipboard(box.Text)
-			log("[INFO] Resultados copiados al portapapeles.")
-		end)
-	else
-		log("[ERROR] setclipboard no disponible en este exploit.")
-	end
+-- BOTONES DE COPIA (en partes)
+Copy1.MouseButton1Click:Connect(function()
+    local parte1 = ""
+    for i = 1, math.min(#resultados, 50) do
+        parte1 = parte1 .. "["..i.."] " .. resultados[i] .. "\n"
+    end
+    setclipboard(parte1)
 end)
 
-close.MouseButton1Click:Connect(function()
-	screenGui:Destroy()
+Copy2.MouseButton1Click:Connect(function()
+    local parte2 = ""
+    for i = 51, math.min(#resultados, 100) do
+        parte2 = parte2 .. "["..i.."] " .. resultados[i] .. "\n"
+    end
+    setclipboard(parte2)
 end)
 
-local minimized = false
-minimize.MouseButton1Click:Connect(function()
-	minimized = not minimized
-	box.Visible = not minimized
-	boton.Visible = not minimized
-	copiar.Visible = not minimized
+-- CERRAR UI
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
 end)
